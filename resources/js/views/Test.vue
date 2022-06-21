@@ -207,8 +207,11 @@ $page-color: #b18f2d;
     gap: 20px;
     padding: 20px;
     border: 10px solid #8c6f1e;
-    @media (max-width: 500px) {
+    @media (max-width: 650px) {
         flex-direction: column;
+    }
+    @media (min-width: 650px) {
+        min-width: 600px;
     }
 }
 

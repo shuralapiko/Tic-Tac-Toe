@@ -16,11 +16,11 @@ class CreateGamesTable extends Migration
         Schema::create('games', function (Blueprint $table) {
             $table->id();
 
-            $table->decimal('player_x', 9, 0)->default(0);
-            $table->decimal('player_o', 9, 0)->default(0);
+            $table->decimal('x_bitmap', 9, 0)->default(0);
+            $table->decimal('o_bitmap', 9, 0)->default(0);
 
-            $table->char('start_turn')->default('x');
-            $table->char('victory')->default('');
+            $table->char('start_turn', 1)->default('x');
+            $table->char('victory', 1)->default('');
 
 
             $table->timestamps();

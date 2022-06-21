@@ -6,7 +6,6 @@ use App\Http\Requests\Game\GamePlacePieceRequest;
 use App\Http\Resources\GameResource;
 use App\Http\ResponseCodes;
 use App\Models\Game;
-use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class GameController extends BaseController
@@ -21,7 +20,7 @@ class GameController extends BaseController
     }
 
     public function placePiece(GamePlacePieceRequest $request, $piece) {
-        $game = Game::orderBy('id', 'desc')->first();
+        $game = Game::orderBy('id', 'desc')->firstOrFail();
 
         if ($game->victory !== '') {
             return response()->json(['message' => 'Status code 423 Locked if a game already finished.'], ResponseCodes::$HTTP_LOCKED);
@@ -50,6 +49,7 @@ class GameController extends BaseController
         $start_turn = self::$start_turn;
         $latest_game = Game::orderBy('id', 'desc')->first();
         if ($latest_game) {
+            // just revert result of previous game
             $start_turn = ['x' => 'o', 'o' => 'x'][$latest_game->start_turn];
         }
 
@@ -57,6 +57,7 @@ class GameController extends BaseController
 
         return new GameResource($game);
     }
+
     public function destroy() {
         Game::truncate();
 
